@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Berlin Beer & Food – Pronósticos de fútbol" />
+  <title>Berlin Beer & Food – Pronósticos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+
+  <!-- Stadium lights flicker on load -->
+  <div class="stadium-lights" id="stadiumLights">
+    <div class="light-beam l1"></div>
+    <div class="light-beam l2"></div>
+    <div class="light-beam l3"></div>
+    <div class="light-beam l4"></div>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="logo-lockup">
+        <div class="logo-mark">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="28" stroke="#C9A84C" stroke-width="2"/>
+            <text x="30" y="22" text-anchor="middle" font-family="Playfair Display" font-size="10" fill="#C9A84C" font-weight="700">BERLIN</text>
+            <text x="30" y="34" text-anchor="middle" font-family="Bebas Neue" font-size="14" fill="#E8C97A">BEER</text>
+            <text x="30" y="44" text-anchor="middle" font-family="Inter" font-size="7" fill="#C9A84C" letter-spacing="2">&amp; FOOD</text>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="brand-name">Berlin</span>
+          <span class="brand-sub">Beer &amp; Food</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content" id="mainContent">
+
+      <!-- Loading state -->
+      <div class="state-loading" id="stateLoading">
+        <div class="spinner"></div>
+        <p>Cargando partido...</p>
+      </div>
+
+      <!-- No active match state -->
+      <div class="state-empty hidden" id="stateEmpty">
+        <div class="empty-icon">⚽</div>
+        <h2>Sin partido activo</h2>
+        <p>Escaneá el código QR cuando haya un partido disponible para hacer tu pronóstico.</p>
+      </div>
+
+      <!-- Closed state -->
+      <div class="state-closed hidden" id="stateClosed">
+        <div class="empty-icon">🔒</div>
+        <h2>Apuestas cerradas</h2>
+        <p>El tiempo de apuestas para este partido ha finalizado. ¡Mucha suerte a todos los participantes!</p>
+      </div>
+
+      <!-- Active match state -->
+      <div class="state-active hidden" id="stateActive">
+
+        <!-- Match card -->
+        <div class="match-card">
+          <div class="match-label">PARTIDO EN JUEGO</div>
+          <h1 class="match-title" id="matchTitle">—</h1>
+
+          <div class="team-display">
+            <div class="team-block" id="teamHomeBlock">
+              <div class="team-crest" id="teamHomeCrest">
+                <span class="crest-placeholder" id="teamHomeEmoji">🏠</span>
+              </div>
+              <span class="team-name" id="teamHomeName">Local</span>
+            </div>
+
+            <div class="match-center">
+              <div class="vs-divider">VS</div>
+              <div class="match-time-badge">
+                <span class="match-date" id="matchDate">—</span>
+                <span class="match-hour" id="matchHour">—</span>
+              </div>
+            </div>
+
+            <div class="team-block" id="teamAwayBlock">
+              <div class="team-crest" id="teamAwayCrest">
+                <span class="crest-placeholder" id="teamAwayEmoji">✈️</span>
+              </div>
+              <span class="team-name" id="teamAwayName">Visitante</span>
+            </div>
+          </div>
+
+          <div class="prize-banner">
+            <span class="prize-label">🏆 Premio</span>
+            <span class="prize-value" id="matchPrize">—</span>
+          </div>
+        </div>
+
+        <!-- Bet form -->
+        <div class="bet-card">
+          <h2 class="section-title">Tu pronóstico</h2>
+
+          <div class="field-group">
+            <label class="field-label" for="playerName">Nombre</label>
+            <input class="field-input" type="text" id="playerName" placeholder="Tu nombre completo" autocomplete="name" maxlength="80" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="tableNumber">Número de mesa</label>
+            <input class="field-input" type="number" id="tableNumber" placeholder="Ej: 5" min="1" max="999" />
+          </div>
+
+          <div class="score-picker">
+            <div class="score-team">
+              <span class="score-team-label" id="scoreHomeName">Local</span>
+              <div class="score-controls">
+                <button class="score-btn minus" data-target="homeGoals" aria-label="Restar gol local">−</button>
+                <div class="score-display" id="homeGoalsDisplay">0</div>
+                <button class="score-btn plus" data-target="homeGoals" aria-label="Sumar gol local">+</button>
+              </div>
+              <input type="hidden" id="homeGoals" value="0" />
+            </div>
+
+            <div class="score-dash">—</div>
+
+            <div class="score-team">
+              <span class="score-team-label" id="scoreAwayName">Visitante</span>
+              <div class="score-controls">
+                <button class="score-btn minus" data-target="awayGoals" aria-label="Restar gol visitante">−</button>
+                <div class="score-display" id="awayGoalsDisplay">0</div>
+                <button class="score-btn plus" data-target="awayGoals" aria-label="Sumar gol visitante">+</button>
+              </div>
+              <input type="hidden" id="awayGoals" value="0" />
+            </div>
+          </div>
+
+          <div class="error-msg hidden" id="errorMsg"></div>
+
+          <button class="submit-btn" id="submitBtn">
+            <span>Enviar pronóstico</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <p class="bet-disclaimer">Una sola apuesta por partido · Gratis</p>
+        </div>
+
+      </div>
+
+      <!-- Success state -->
+      <div class="state-success hidden" id="stateSuccess">
+        <div class="success-icon">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="28" stroke="#C9A84C" stroke-width="2"/>
+            <path d="M18 30l8 8 16-16" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>¡Pronóstico enviado!</h2>
+        <p id="successMessage">Tu apuesta fue registrada. ¡Buena suerte!</p>
+        <div class="success-detail" id="successDetail"></div>
+      </div>
+
+    </main>
+
+    <footer class="site-footer">
+      <p>Berlin Beer &amp; Food · Santa Fe, Argentina</p>
+    </footer>
+  </div>
+
+  <script src="/assets/app.js"></script>
+</body>
+</html>

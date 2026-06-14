@@ -1,0 +1,8 @@
+name = "berlin-beer-food"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "public"
+
+[[kv_namespaces]]
+binding = "BERLIN_KV"
+id = "YOUR_KV_NAMESPACE_ID_HERE"
+preview_id = "YOUR_KV_PREVIEW_NAMESPACE_ID_HERE"

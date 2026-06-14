@@ -3,7 +3,7 @@
  * Loads the real match result and automatically detects winners.
  * Body: { home, away }
  */
-import { isAuthenticated, jsonResponse, unauthorized } from '../../../_auth.js';
+import { isAuthenticated, jsonResponse, unauthorized } from '../../_auth.js';
 
 export async function onRequestPost({ request, env, params }) {
   if (!await isAuthenticated(request, env)) return unauthorized();

@@ -2,9 +2,6 @@
  * GET /api/admin/verify
  * Verifies that an admin session token is still valid.
  */
-<<<<<<< HEAD
-import { isAuthenticated, jsonResponse, unauthorized } from './_auth.js';
-=======
 
 async function isAuthenticated(request, env) {
   const auth = request.headers.get("Authorization") || "";
@@ -29,7 +26,6 @@ function unauthorized() {
     headers: { "Content-Type": "application/json" },
   });
 }
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
 
 export async function onRequestGet({ request, env }) {
   if (!await isAuthenticated(request, env)) return unauthorized();
@@ -40,15 +36,9 @@ export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
     headers: {
-<<<<<<< HEAD
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-=======
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
     },
   });
 }

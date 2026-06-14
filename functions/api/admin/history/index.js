@@ -1,10 +1,4 @@
 /**
-<<<<<<< HEAD
- * GET /api/admin/history        → list all past matches
- * GET /api/admin/history/[id]   → detail of one past match
- */
-import { isAuthenticated, jsonResponse, unauthorized } from '../_auth.js';
-=======
  * GET /api/admin/history
  * Lists all past (archived) matches.
  */
@@ -32,20 +26,13 @@ function jsonResponse(data, status = 200) {
     },
   });
 }
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
 
 export async function onRequestGet({ request, env }) {
   if (!await isAuthenticated(request, env)) return unauthorized();
 
   try {
-<<<<<<< HEAD
-    const indexRaw = await env.BERLIN_KV.get('archived_match_index');
-    const index    = indexRaw ? JSON.parse(indexRaw) : [];
-
-=======
     const indexRaw = await env.BERLIN_KV.get("archived_match_index");
     const index    = indexRaw ? JSON.parse(indexRaw) : [];
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
     if (index.length === 0) return jsonResponse({ matches: [] });
 
     const matches = [];
@@ -65,16 +52,9 @@ export async function onRequestGet({ request, env }) {
     }
 
     return jsonResponse({ matches });
-<<<<<<< HEAD
-
-  } catch (err) {
-    console.error('History error:', err);
-    return jsonResponse({ error: 'Error interno.' }, 500);
-=======
   } catch (err) {
     console.error("History error:", err);
     return jsonResponse({ error: "Error interno." }, 500);
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
   }
 }
 
@@ -82,15 +62,9 @@ export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
     headers: {
-<<<<<<< HEAD
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-=======
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "GET, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
->>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
     },
   });
 }

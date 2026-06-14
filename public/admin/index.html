@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Berlin Beer & Food</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="/assets/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- Login screen -->
+  <div class="admin-login" id="adminLogin">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" width="60" height="60">
+          <circle cx="30" cy="30" r="28" stroke="#C9A84C" stroke-width="2"/>
+          <text x="30" y="22" text-anchor="middle" font-family="Playfair Display" font-size="10" fill="#C9A84C" font-weight="700">BERLIN</text>
+          <text x="30" y="34" text-anchor="middle" font-family="Bebas Neue" font-size="14" fill="#E8C97A">BEER</text>
+          <text x="30" y="44" text-anchor="middle" font-family="Inter" font-size="7" fill="#C9A84C" letter-spacing="2">&amp; FOOD</text>
+        </svg>
+      </div>
+      <h1 class="login-title">Panel de administración</h1>
+      <div class="field-group">
+        <label class="field-label" for="loginPassword">Contraseña</label>
+        <input class="field-input" type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <div class="error-msg hidden" id="loginError">Contraseña incorrecta.</div>
+      <button class="submit-btn" id="loginBtn">Ingresar</button>
+    </div>
+  </div>
+
+  <!-- Admin dashboard -->
+  <div class="admin-dashboard hidden" id="adminDashboard">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-brand">Berlin Admin</span>
+        <button class="sidebar-close" id="sidebarClose" aria-label="Cerrar menú">✕</button>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-section="match">⚽ Partido actual</button>
+        <button class="nav-item" data-section="participants">👥 Participantes</button>
+        <button class="nav-item" data-section="results">🏆 Resultados</button>
+        <button class="nav-item" data-section="history">📋 Historial</button>
+      </nav>
+      <button class="logout-btn" id="logoutBtn">Cerrar sesión</button>
+    </aside>
+
+    <!-- Main admin area -->
+    <div class="admin-main">
+
+      <!-- Top bar -->
+      <div class="admin-topbar">
+        <button class="topbar-menu-btn" id="menuToggle" aria-label="Abrir menú">☰</button>
+        <span class="topbar-title" id="topbarTitle">Partido actual</span>
+      </div>
+
+      <!-- Section: Match -->
+      <section class="admin-section active" id="sectionMatch">
+        <div class="section-header">
+          <h2>Partido actual</h2>
+          <button class="btn-gold" id="btnCreateMatch">+ Nuevo partido</button>
+        </div>
+
+        <!-- Current match display -->
+        <div id="currentMatchPanel">
+          <div class="no-match-msg" id="noMatchMsg">
+            <p>No hay ningún partido activo.</p>
+            <p>Creá uno con el botón de arriba.</p>
+          </div>
+
+          <div class="match-admin-card hidden" id="matchAdminCard">
+            <div class="match-admin-info">
+              <div class="info-row"><span class="info-label">Partido</span><span class="info-val" id="adminMatchTitle">—</span></div>
+              <div class="info-row"><span class="info-label">Local</span><span class="info-val" id="adminHomeName">—</span></div>
+              <div class="info-row"><span class="info-label">Visitante</span><span class="info-val" id="adminAwayName">—</span></div>
+              <div class="info-row"><span class="info-label">Fecha y hora</span><span class="info-val" id="adminMatchDatetime">—</span></div>
+              <div class="info-row"><span class="info-label">Cierre</span><span class="info-val" id="adminCloseTime">—</span></div>
+              <div class="info-row"><span class="info-label">Premio</span><span class="info-val" id="adminPrize">—</span></div>
+              <div class="info-row"><span class="info-label">Estado</span><span class="info-val" id="adminMatchStatus">—</span></div>
+              <div class="info-row" id="resultRow" style="display:none"><span class="info-label">Resultado real</span><span class="info-val" id="adminRealResult">—</span></div>
+            </div>
+            <div class="match-admin-actions">
+              <button class="btn-outline" id="btnEditMatch">Editar partido</button>
+              <button class="btn-outline" id="btnSetResult">Cargar resultado</button>
+              <button class="btn-danger" id="btnDeleteMatch">Eliminar partido</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Participants -->
+      <section class="admin-section hidden" id="sectionParticipants">
+        <div class="section-header">
+          <h2>Participantes</h2>
+          <div class="header-actions">
+            <button class="btn-outline" id="btnExportCSV">Exportar CSV</button>
+            <button class="btn-outline" id="btnExportExcel">Exportar Excel</button>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <div class="no-data-msg hidden" id="noParticipantsMsg">No hay participantes registrados aún.</div>
+          <table class="admin-table" id="participantsTable">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Mesa</th>
+                <th>Pronóstico</th>
+                <th>Fecha/Hora apuesta</th>
+                <th>Ganador</th>
+              </tr>
+            </thead>
+            <tbody id="participantsBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section: Results -->
+      <section class="admin-section hidden" id="sectionResults">
+        <div class="section-header">
+          <h2>Resultados y ganadores</h2>
+        </div>
+        <div id="resultsContent">
+          <div class="no-data-msg" id="noResultsMsg">Cargá el resultado real del partido para ver los ganadores.</div>
+          <div class="result-summary hidden" id="resultSummary">
+            <div class="result-display">
+              <div class="result-label">Resultado final</div>
+              <div class="result-score" id="realScoreDisplay">— : —</div>
+            </div>
+            <div class="winners-section">
+              <h3>🏆 Ganadores</h3>
+              <div class="no-data-msg hidden" id="noWinnersMsg">Nadie acertó el resultado exacto.</div>
+              <div class="winners-list" id="winnersList"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: History -->
+      <section class="admin-section hidden" id="sectionHistory">
+        <div class="section-header">
+          <h2>Historial de jornadas</h2>
+        </div>
+        <div id="historyContent">
+          <div class="no-data-msg" id="noHistoryMsg">No hay jornadas anteriores.</div>
+          <div class="history-list" id="historyList"></div>
+          <!-- History detail view -->
+          <div class="history-detail hidden" id="historyDetail">
+            <button class="btn-outline btn-back" id="btnBackHistory">← Volver al historial</button>
+            <h3 id="historyDetailTitle"></h3>
+            <div class="table-wrapper">
+              <table class="admin-table" id="historyDetailTable">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Mesa</th>
+                    <th>Pronóstico</th>
+                    <th>Fecha/Hora</th>
+                    <th>Ganador</th>
+                  </tr>
+                </thead>
+                <tbody id="historyDetailBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Modal: Create / Edit match -->
+  <div class="modal-overlay hidden" id="matchModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Nuevo partido</h3>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+
+        <div class="field-group">
+          <label class="field-label" for="mMatchTitle">Nombre del partido</label>
+          <input class="field-input" type="text" id="mMatchTitle" placeholder="Ej: Copa América – Cuartos" maxlength="120" />
+        </div>
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="mHomeName">Equipo local</label>
+            <input class="field-input" type="text" id="mHomeName" placeholder="Nombre del equipo" maxlength="60" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="mAwayName">Equipo visitante</label>
+            <input class="field-input" type="text" id="mAwayName" placeholder="Nombre del equipo" maxlength="60" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="mHomeEmoji">Escudo local (emoji o URL)</label>
+            <input class="field-input" type="text" id="mHomeEmoji" placeholder="🇦🇷 o https://..." maxlength="200" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="mAwayEmoji">Escudo visitante (emoji o URL)</label>
+            <input class="field-input" type="text" id="mAwayEmoji" placeholder="🇧🇷 o https://..." maxlength="200" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field-group">
+            <label class="field-label" for="mMatchDatetime">Fecha y hora del partido</label>
+            <input class="field-input" type="datetime-local" id="mMatchDatetime" />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="mCloseTime">Cierre de apuestas</label>
+            <input class="field-input" type="datetime-local" id="mCloseTime" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="mPrize">Premio</label>
+          <input class="field-input" type="text" id="mPrize" placeholder="Ej: Una jarra de cerveza" maxlength="200" />
+        </div>
+
+        <div class="error-msg hidden" id="modalError"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-outline" id="btnModalCancel">Cancelar</button>
+        <button class="btn-gold" id="btnModalSave">Guardar partido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Set result -->
+  <div class="modal-overlay hidden" id="resultModal">
+    <div class="modal-card modal-card-sm">
+      <div class="modal-header">
+        <h3>Cargar resultado real</h3>
+        <button class="modal-close" id="resultModalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-info" id="resultMatchLabel">—</p>
+        <div class="score-picker">
+          <div class="score-team">
+            <span class="score-team-label" id="resultHomeName">Local</span>
+            <div class="score-controls">
+              <button class="score-btn minus" data-target="resultHome">−</button>
+              <div class="score-display" id="resultHomeDisplay">0</div>
+              <button class="score-btn plus" data-target="resultHome">+</button>
+            </div>
+            <input type="hidden" id="resultHome" value="0" />
+          </div>
+          <div class="score-dash">—</div>
+          <div class="score-team">
+            <span class="score-team-label" id="resultAwayName">Visitante</span>
+            <div class="score-controls">
+              <button class="score-btn minus" data-target="resultAway">−</button>
+              <div class="score-display" id="resultAwayDisplay">0</div>
+              <button class="score-btn plus" data-target="resultAway">+</button>
+            </div>
+            <input type="hidden" id="resultAway" value="0" />
+          </div>
+        </div>
+        <div class="error-msg hidden" id="resultError"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-outline" id="btnResultCancel">Cancelar</button>
+        <button class="btn-gold" id="btnResultSave">Confirmar resultado</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/admin.js"></script>
+</body>
+</html>

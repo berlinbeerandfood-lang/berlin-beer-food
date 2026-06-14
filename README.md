@@ -1,4 +1,4 @@
-# Berlin Beer & Food — Sistema de Pronósticos 🍺⚽
+# Berlin Beer & Food — Sistema de Pronósticos 🍺⚽.
 
 Aplicación web para que los clientes del bar puedan pronosticar el resultado de partidos de fútbol desde su celular, escaneando un código QR.
 

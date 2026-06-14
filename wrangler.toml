@@ -4,5 +4,5 @@ pages_build_output_dir = "public"
 
 [[kv_namespaces]]
 binding = "BERLIN_KV"
-id = "YOUR_KV_NAMESPACE_ID_HERE"
-preview_id = "YOUR_KV_PREVIEW_NAMESPACE_ID_HERE"
+id = "a513fa12615545018118fc1f4b639e38"
+preview_id = "c907d2e1ad2f4716aaf5fde823c42cb8"

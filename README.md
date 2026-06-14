@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Berlin Beer & Food — Sistema de Pronósticos 🍺⚽.
+=======
+# Berlin Beer & Food — Sistema de Pronósticos 🍺⚽
+>>>>>>> 467e8f5 (Inicial: Berlin Beer & Food)
 
 Aplicación web para que los clientes del bar puedan pronosticar el resultado de partidos de fútbol desde su celular, escaneando un código QR.
 

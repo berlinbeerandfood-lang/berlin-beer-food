@@ -91,7 +91,7 @@ body {
 /* ---- Header ---- */
 
 .site-header {
-  padding: 24px 0 20px;
+  padding: 20px 0 16px;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid var(--border);
@@ -100,32 +100,20 @@ body {
 .logo-lockup {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
 }
 
-.logo-mark svg { width: 52px; height: 52px; }
+.logo-img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
 
-.logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
+  display: block;
 }
 
-.brand-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: -0.5px;
-}
-
-.brand-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--muted);
-  letter-spacing: 3px;
-  text-transform: uppercase;
+.logo-img-sm {
+  width: 120px;
+  height: 120px;
 }
 
 /* ---- Main content ---- */
